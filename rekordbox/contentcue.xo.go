@@ -22,8 +22,8 @@ type ContentCue struct {
 	RbLocalSynced     nulltype.NullInt64  `json:"rb_local_synced"`      // rb_local_synced
 	Usn               nulltype.NullInt64  `json:"usn"`                  // usn
 	RbLocalUsn        nulltype.NullInt64  `json:"rb_local_usn"`         // rb_local_usn
-	CreatedAt         Time                `json:"created_at"`           // created_at
-	UpdatedAt         Time                `json:"updated_at"`           // updated_at
+	CreatedAt         string                `json:"created_at"`           // created_at
+	UpdatedAt         string                `json:"updated_at"`           // updated_at
 	// xo fields
 	_exists, _deleted bool
 }
@@ -190,7 +190,7 @@ func (c *Client) ContentCueByContentID(ctx context.Context, contentID nulltype.N
 
 	// query
 	const sqlstr = `SELECT ` +
-		`ID, ContentID, Cues, rb_cue_count, UUID, rb_data_status, rb_local_data_status, rb_local_deleted, rb_local_synced, usn, rb_local_usn, created_at, updated_at ` +
+		`ID, ContentID, Cues, rb_cue_count, UUID, rb_data_status, rb_local_data_status, rb_local_deleted, rb_local_synced, usn, rb_local_usn, CAST(created_at as TEXT), CAST(updated_at as TEXT) ` +
 		`FROM contentCue ` +
 		`WHERE ContentID = $1`
 	// run
@@ -449,7 +449,7 @@ func (c *Client) ContentCueByID(ctx context.Context, id nulltype.NullString) (*C
 
 	// query
 	const sqlstr = `SELECT ` +
-		`ID, ContentID, Cues, rb_cue_count, UUID, rb_data_status, rb_local_data_status, rb_local_deleted, rb_local_synced, usn, rb_local_usn, created_at, updated_at ` +
+		`ID, ContentID, Cues, rb_cue_count, UUID, rb_data_status, rb_local_data_status, rb_local_deleted, rb_local_synced, usn, rb_local_usn, CAST(created_at as TEXT), CAST(updated_at as TEXT) ` +
 		`FROM contentCue ` +
 		`WHERE ID = $1`
 	// run

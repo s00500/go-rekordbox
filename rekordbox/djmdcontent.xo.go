@@ -87,8 +87,8 @@ type DjmdContent struct {
 	RbLocalSynced     nulltype.NullInt64   `json:"rb_local_synced"`      // rb_local_synced
 	Usn               nulltype.NullInt64   `json:"usn"`                  // usn
 	RbLocalUsn        nulltype.NullInt64   `json:"rb_local_usn"`         // rb_local_usn
-	CreatedAt         Time                 `json:"created_at"`           // created_at
-	UpdatedAt         Time                 `json:"updated_at"`           // updated_at
+	CreatedAt         string                 `json:"created_at"`           // created_at
+	UpdatedAt         string                 `json:"updated_at"`           // updated_at
 	// xo fields
 	_exists, _deleted bool
 }
@@ -921,7 +921,7 @@ func (c *Client) DjmdContentByID(ctx context.Context, id nulltype.NullString) (*
 
 	// query
 	const sqlstr = `SELECT ` +
-		`ID, FolderPath, FileNameL, FileNameS, Title, ArtistID, AlbumID, GenreID, BPM, Length, TrackNo, BitRate, BitDepth, Commnt, FileType, Rating, ReleaseYear, RemixerID, LabelID, OrgArtistID, KeyID, StockDate, ColorID, DJPlayCount, ImagePath, MasterDBID, MasterSongID, AnalysisDataPath, SearchStr, FileSize, DiscNo, ComposerID, Subtitle, SampleRate, DisableQuantize, Analysed, ReleaseDate, DateCreated, ContentLink, Tag, ModifiedByRBM, HotCueAutoLoad, DeliveryControl, DeliveryComment, CueUpdated, AnalysisUpdated, TrackInfoUpdated, Lyricist, ISRC, SamplerTrackInfo, SamplerPlayOffset, SamplerGain, VideoAssociate, LyricStatus, ServiceID, OrgFolderPath, Reserved1, Reserved2, Reserved3, Reserved4, ExtInfo, rb_file_id, DeviceID, rb_LocalFolderPath, SrcID, SrcTitle, SrcArtistName, SrcAlbumName, SrcLength, UUID, rb_data_status, rb_local_data_status, rb_local_deleted, rb_local_synced, usn, rb_local_usn, created_at, updated_at ` +
+		`ID, FolderPath, FileNameL, FileNameS, Title, ArtistID, AlbumID, GenreID, BPM, Length, TrackNo, BitRate, BitDepth, Commnt, FileType, Rating, ReleaseYear, RemixerID, LabelID, OrgArtistID, KeyID, StockDate, ColorID, DJPlayCount, ImagePath, MasterDBID, MasterSongID, AnalysisDataPath, SearchStr, FileSize, DiscNo, ComposerID, Subtitle, SampleRate, DisableQuantize, Analysed, ReleaseDate, DateCreated, ContentLink, Tag, ModifiedByRBM, HotCueAutoLoad, DeliveryControl, DeliveryComment, CueUpdated, AnalysisUpdated, TrackInfoUpdated, Lyricist, ISRC, SamplerTrackInfo, SamplerPlayOffset, SamplerGain, VideoAssociate, LyricStatus, ServiceID, OrgFolderPath, Reserved1, Reserved2, Reserved3, Reserved4, ExtInfo, rb_file_id, DeviceID, rb_LocalFolderPath, SrcID, SrcTitle, SrcArtistName, SrcAlbumName, SrcLength, UUID, rb_data_status, rb_local_data_status, rb_local_deleted, rb_local_synced, usn, rb_local_usn, CAST(created_at AS TEXT), CAST(updated_at AS TEXT)` +
 		`FROM djmdContent ` +
 		`WHERE ID = $1`
 	// run
