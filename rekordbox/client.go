@@ -1,6 +1,8 @@
 package rekordbox
 
 import (
+	"path/filepath"
+
 	"github.com/dvcrn/go-rekordbox/internal/supbox"
 	"github.com/jmoiron/sqlx"
 	"github.com/nurcahyaari/sqlabst"
@@ -29,6 +31,16 @@ func NewClient(optionsFilePath string) (*Client, error) {
 	}
 
 	return &Client{db: sqlabst.NewSqlAbst(db)}, nil
+}
+
+func DataPath(optionsFilePath string) string {
+	// Files and paths
+	rekordboxConfig := supbox.ReadRekordboxConfig(optionsFilePath)
+
+	// {"options":[["db-path","/Users/david/Library/Pioneer/rekordbox/master.db"], ...}
+	databaseFilePath := rekordboxConfig.Options[0][1]
+
+	return filepath.Dir(databaseFilePath)
 }
 
 func (c *Client) Close() {
