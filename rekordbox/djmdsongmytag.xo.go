@@ -22,8 +22,8 @@ type DjmdSongMyTag struct {
 	RbLocalSynced     nulltype.NullInt64  `json:"rb_local_synced"`      // rb_local_synced
 	Usn               nulltype.NullInt64  `json:"usn"`                  // usn
 	RbLocalUsn        nulltype.NullInt64  `json:"rb_local_usn"`         // rb_local_usn
-	CreatedAt         Time                `json:"created_at"`           // created_at
-	UpdatedAt         Time                `json:"updated_at"`           // updated_at
+	CreatedAt         string                `json:"created_at"`           // created_at
+	UpdatedAt         string                `json:"updated_at"`           // updated_at
 	// xo fields
 	_exists, _deleted bool
 }

@@ -232,7 +232,7 @@ func scanDjmdContentRows(rows *sql.Rows) ([]*DjmdContent, error) {
 func (c *Client) AllDjmdContent(ctx context.Context) ([]*DjmdContent, error) {
 	db := c.db
 
-	const sqlstr = `SELECT * FROM DjmdContent`
+	const sqlstr = `SELECT ID, FolderPath, FileNameL, FileNameS, Title, ArtistID, AlbumID, GenreID, BPM, Length, TrackNo, BitRate, BitDepth, Commnt, FileType, Rating, ReleaseYear, RemixerID, LabelID, OrgArtistID, KeyID, StockDate, ColorID, DJPlayCount, ImagePath, MasterDBID, MasterSongID, AnalysisDataPath, SearchStr, FileSize, DiscNo, ComposerID, Subtitle, SampleRate, DisableQuantize, Analysed, ReleaseDate, DateCreated, ContentLink, Tag, ModifiedByRBM, HotCueAutoLoad, DeliveryControl, DeliveryComment, CueUpdated, AnalysisUpdated, TrackInfoUpdated, Lyricist, ISRC, SamplerTrackInfo, SamplerPlayOffset, SamplerGain, VideoAssociate, LyricStatus, ServiceID, OrgFolderPath, Reserved1, Reserved2, Reserved3, Reserved4, ExtInfo, rb_file_id, DeviceID, rb_LocalFolderPath, SrcID, SrcTitle, SrcArtistName, SrcAlbumName, SrcLength, UUID, rb_data_status, rb_local_data_status, rb_local_deleted, rb_local_synced, usn, rb_local_usn, CAST(created_at AS TEXT), CAST(updated_at AS TEXT) FROM DjmdContent`
 	rows, err := db.QueryContext(ctx, sqlstr)
 	if err != nil {
 		return nil, logerror(err)
