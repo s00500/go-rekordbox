@@ -183,43 +183,6 @@ func (c *Client) AllDjmdMixerParam(ctx context.Context) ([]*DjmdMixerParam, erro
 	return res, nil
 }
 
-// DjmdMixerParamByContentID retrieves a row from 'djmdMixerParam' as a DjmdMixerParam.
-//
-// Generated from index 'djmd_mixer_param__content_i_d'.
-func (c *Client) DjmdMixerParamByContentID(ctx context.Context, contentID nulltype.NullString) ([]*DjmdMixerParam, error) {
-	// func DjmdMixerParamByContentID(ctx context.Context, db DB, contentID nulltype.NullString) ([]*DjmdMixerParam, error) {
-	db := c.db
-
-	// query
-	const sqlstr = `SELECT ` +
-		`ID, ContentID, GainHigh, GainLow, PeakHigh, PeakLow, UUID, rb_data_status, rb_local_data_status, rb_local_deleted, rb_local_synced, usn, rb_local_usn, created_at, updated_at ` +
-		`FROM djmdMixerParam ` +
-		`WHERE ContentID = $1`
-	// run
-	logf(sqlstr, contentID)
-	rows, err := db.QueryContext(ctx, sqlstr, contentID)
-	if err != nil {
-		return nil, logerror(err)
-	}
-	defer rows.Close()
-	// process
-	var res []*DjmdMixerParam
-	for rows.Next() {
-		dmp := DjmdMixerParam{
-			_exists: true,
-		}
-		// scan
-		if err := rows.Scan(&dmp.ID, &dmp.ContentID, &dmp.GainHigh, &dmp.GainLow, &dmp.PeakHigh, &dmp.PeakLow, &dmp.UUID, &dmp.RbDataStatus, &dmp.RbLocalDataStatus, &dmp.RbLocalDeleted, &dmp.RbLocalSynced, &dmp.Usn, &dmp.RbLocalUsn, &dmp.CreatedAt, &dmp.UpdatedAt); err != nil {
-			return nil, logerror(err)
-		}
-		res = append(res, &dmp)
-	}
-	if err := rows.Err(); err != nil {
-		return nil, logerror(err)
-	}
-	return res, nil
-}
-
 // DjmdMixerParamByContentIDRbLocalDeleted retrieves a row from 'djmdMixerParam' as a DjmdMixerParam.
 //
 // Generated from index 'djmd_mixer_param__content_i_d_rb_local_deleted'.

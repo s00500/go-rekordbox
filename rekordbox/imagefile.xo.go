@@ -231,43 +231,6 @@ func (c *Client) ImageFileByTableNameTargetID(ctx context.Context, tableName, ta
 	return res, nil
 }
 
-// ImageFileByTableNameTargetUUID retrieves a row from 'imageFile' as a ImageFile.
-//
-// Generated from index 'image_file__table_name__target_u_u_i_d'.
-func (c *Client) ImageFileByTableNameTargetUUID(ctx context.Context, tableName, targetUUID nulltype.NullString) ([]*ImageFile, error) {
-	// func ImageFileByTableNameTargetUUID(ctx context.Context, db DB, tableName nulltype.NullString, targetUUID nulltype.NullString) ([]*ImageFile, error) {
-	db := c.db
-
-	// query
-	const sqlstr = `SELECT ` +
-		`ID, TableName, TargetUUID, TargetID, Path, Hash, Size, rb_local_path, rb_insync_hash, rb_insync_local_usn, rb_file_hash_dirty, rb_local_file_status, rb_in_progress, rb_process_type, rb_temp_path, rb_priority, rb_file_size_dirty, UUID, rb_data_status, rb_local_data_status, rb_local_deleted, rb_local_synced, usn, rb_local_usn, created_at, updated_at ` +
-		`FROM imageFile ` +
-		`WHERE TableName = $1 AND TargetUUID = $2`
-	// run
-	logf(sqlstr, tableName, targetUUID)
-	rows, err := db.QueryContext(ctx, sqlstr, tableName, targetUUID)
-	if err != nil {
-		return nil, logerror(err)
-	}
-	defer rows.Close()
-	// process
-	var res []*ImageFile
-	for rows.Next() {
-		ifVal := ImageFile{
-			_exists: true,
-		}
-		// scan
-		if err := rows.Scan(&ifVal.ID, &ifVal.TableName, &ifVal.TargetUUID, &ifVal.TargetID, &ifVal.Path, &ifVal.Hash, &ifVal.Size, &ifVal.RbLocalPath, &ifVal.RbInsyncHash, &ifVal.RbInsyncLocalUsn, &ifVal.RbFileHashDirty, &ifVal.RbLocalFileStatus, &ifVal.RbInProgress, &ifVal.RbProcessType, &ifVal.RbTempPath, &ifVal.RbPriority, &ifVal.RbFileSizeDirty, &ifVal.UUID, &ifVal.RbDataStatus, &ifVal.RbLocalDataStatus, &ifVal.RbLocalDeleted, &ifVal.RbLocalSynced, &ifVal.Usn, &ifVal.RbLocalUsn, &ifVal.CreatedAt, &ifVal.UpdatedAt); err != nil {
-			return nil, logerror(err)
-		}
-		res = append(res, &ifVal)
-	}
-	if err := rows.Err(); err != nil {
-		return nil, logerror(err)
-	}
-	return res, nil
-}
-
 // ImageFileByTableNameTargetUUIDID retrieves a row from 'imageFile' as a ImageFile.
 //
 // Generated from index 'image_file__table_name__target_u_u_i_d__i_d'.

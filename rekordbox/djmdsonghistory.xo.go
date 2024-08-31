@@ -181,43 +181,6 @@ func (c *Client) AllDjmdSongHistory(ctx context.Context) ([]*DjmdSongHistory, er
 	return res, nil
 }
 
-// DjmdSongHistoryByContentID retrieves a row from 'djmdSongHistory' as a DjmdSongHistory.
-//
-// Generated from index 'djmd_song_history__content_i_d'.
-func (c *Client) DjmdSongHistoryByContentID(ctx context.Context, contentID nulltype.NullString) ([]*DjmdSongHistory, error) {
-	// func DjmdSongHistoryByContentID(ctx context.Context, db DB, contentID nulltype.NullString) ([]*DjmdSongHistory, error) {
-	db := c.db
-
-	// query
-	const sqlstr = `SELECT ` +
-		`ID, HistoryID, ContentID, TrackNo, UUID, rb_data_status, rb_local_data_status, rb_local_deleted, rb_local_synced, usn, rb_local_usn, created_at, updated_at ` +
-		`FROM djmdSongHistory ` +
-		`WHERE ContentID = $1`
-	// run
-	logf(sqlstr, contentID)
-	rows, err := db.QueryContext(ctx, sqlstr, contentID)
-	if err != nil {
-		return nil, logerror(err)
-	}
-	defer rows.Close()
-	// process
-	var res []*DjmdSongHistory
-	for rows.Next() {
-		dsh := DjmdSongHistory{
-			_exists: true,
-		}
-		// scan
-		if err := rows.Scan(&dsh.ID, &dsh.HistoryID, &dsh.ContentID, &dsh.TrackNo, &dsh.UUID, &dsh.RbDataStatus, &dsh.RbLocalDataStatus, &dsh.RbLocalDeleted, &dsh.RbLocalSynced, &dsh.Usn, &dsh.RbLocalUsn, &dsh.CreatedAt, &dsh.UpdatedAt); err != nil {
-			return nil, logerror(err)
-		}
-		res = append(res, &dsh)
-	}
-	if err := rows.Err(); err != nil {
-		return nil, logerror(err)
-	}
-	return res, nil
-}
-
 // DjmdSongHistoryByContentIDRbLocalDeleted retrieves a row from 'djmdSongHistory' as a DjmdSongHistory.
 //
 // Generated from index 'djmd_song_history__content_i_d_rb_local_deleted'.
